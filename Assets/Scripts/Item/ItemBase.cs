@@ -29,12 +29,25 @@ public class ItemBase : MonoBehaviour, IInteractable
         }
     }
 
+    /// <summary>
+    /// 이 월드 아이템이 참조하는 아이템 데이터.
+    /// </summary>
+    public ItemData ItemData => itemData;
+
+    /// <summary>
+    /// 월드에 다시 드롭될 때 재획득 가능 상태로 초기화한다.
+    /// </summary>
+    public void ResetCollectedState()
+    {
+        isCollected = false;
+    }
+
     private void Awake()
     {
         if (inventoryManager == null)
         {
             inventoryManager = FindFirstObjectByType<InventoryManager>();
-            Debug.Log("인벤토리 매니저 발견.");
+            //Debug.Log("인벤토리 매니저 발견.");
         }
     }
 
