@@ -11,16 +11,21 @@ public class InvenSlotView : MonoBehaviour, IPointerClickHandler
     [SerializeField] private Image iconImage;
 
     private ItemData boundItemData;
+    private int boundSlotIndex = -1;
 
     /// <summary>
-    /// 슬롯 클릭 시 선택된 아이템 데이터를 전달한다.
+    /// 슬롯 클릭 시 선택된 슬롯 인덱스와 아이템 데이터를 전달한다.
     /// </summary>
-    public event Action<ItemData> SlotClicked;
+    public event Action<int, ItemData> SlotClicked;
 
-    /// 슬롯에 아이템을 표시한다.
+    /// <summary>
+    /// 슬롯 인덱스와 아이템을 바인딩한다.
+    /// </summary>
+    /// <param name="slotIndex">슬롯 인덱스.</param>
     /// <param name="itemData">표시할 아이템 데이터.</param>
-    public void Bind(ItemData itemData)
+    public void Bind(int slotIndex, ItemData itemData)
     {
+        boundSlotIndex = slotIndex;
         boundItemData = itemData;
 
         if (iconImage == null)
@@ -44,6 +49,7 @@ public class InvenSlotView : MonoBehaviour, IPointerClickHandler
     /// </summary>
     public void Clear()
     {
+        boundSlotIndex = -1;
         boundItemData = null;
 
         if (iconImage == null)
@@ -65,6 +71,6 @@ public class InvenSlotView : MonoBehaviour, IPointerClickHandler
         //string itemName = boundItemData != null ? boundItemData.ItemName : "(Empty)";
         //string buttonName = eventData.button.ToString();
         //Debug.Log($"[InvenSlotView] OnPointerClick - Slot: {name}, Item: {itemName}, Button: {buttonName}", this);
-        SlotClicked?.Invoke(boundItemData);
+        SlotClicked?.Invoke(boundSlotIndex, boundItemData);
     }
 }

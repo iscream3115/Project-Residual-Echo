@@ -12,7 +12,7 @@ public class InvenGridView : MonoBehaviour
     /// <summary>
     /// 슬롯에서 아이템이 선택될 때 호출된다.
     /// </summary>
-    public event Action<ItemData> SlotItemSelected;
+    public event Action<int, ItemData> SlotItemSelected;
 
     private void OnEnable()
     {
@@ -64,7 +64,7 @@ public class InvenGridView : MonoBehaviour
 
             if (items != null && i < items.Count && items[i] != null)
             {
-                slotView.Bind(items[i]);
+                slotView.Bind(i, items[i]);
             }
             else
             {
@@ -73,8 +73,8 @@ public class InvenGridView : MonoBehaviour
         }
     }
 
-    private void HandleSlotClicked(ItemData itemData)
+    private void HandleSlotClicked(int slotIndex, ItemData itemData)
     {
-        SlotItemSelected?.Invoke(itemData);
+        SlotItemSelected?.Invoke(slotIndex, itemData);
     }
 }
